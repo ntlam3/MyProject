@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          # Use the branch that triggered the original CI run (e.g., 'develop')
+          ref: ${{ github.event.workflow_run.head_branch }}
       - name: Make script executable
         run: chmod +x env-script.sh
       - name: Run script
