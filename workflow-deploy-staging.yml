@@ -1,0 +1,35 @@
+name: Deploy Staging Environment
+
+on:
+  workflow_run:
+    workflows: ["Run CI Workflow"]
+    types:
+      - completed
+    branches: [develop]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  deploy:
+      name: Deploy to Staging
+      needs: prepare-variables
+      uses: ./.github/workflows/tool-deploy-infrastructure.yml
+      with:
+        #tag: ${{ github.event.workflow_run.head_sha }}
+
+  display-environment:
+    name: Display Environment
+    runs-on: ubuntu-24.04
+    env:
+      REF: ${{ github.ref }}
+    steps:
+      - name: Dump full event JSON
+        run: |
+          echo "=== $GITHUB_EVENT_NAME payload ==="
+          cat "$GITHUB_EVENT_PATH"
+          echo "====================="
+          echo "Branch: $GITHUB_REF"
+          echo "Branch: $REF"
+    
