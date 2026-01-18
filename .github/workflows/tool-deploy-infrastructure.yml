@@ -2,7 +2,11 @@ name: Deploy Infrastructure
 
 on:
   workflow_call:
-
+    inputs:
+      tag:
+        required: true
+        type: string
+        description: "tag"
 jobs:
   run-env-script:
     name: Run Environment Script
