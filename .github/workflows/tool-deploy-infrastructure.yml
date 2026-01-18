@@ -1,0 +1,16 @@
+name: Deploy Infrastructure
+
+on:
+  workflow_call:
+
+jobs:
+  run-env-script:
+    name: Run Environment Script
+    runs-on: ubuntu-24.04
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Run script
+        run: env-script.sh
