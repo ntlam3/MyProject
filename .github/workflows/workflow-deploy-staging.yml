@@ -11,8 +11,8 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
-jobs:
-  
+jobs:     
+
   display-environment:
     name: Display Environment
     runs-on: ubuntu-24.04
@@ -27,9 +27,17 @@ jobs:
           echo "Branch: $GITHUB_REF"
           echo "Branch: $REF"
   deploy:
-      name: Deploy to Staging
-      needs: display-environment
-      uses: ./.github/workflows/tool-deploy-infrastructure.yml
-      #with:
-        #tag: ${{ github.event.workflow_run.head_sha }}
+    name: Deploy to Staging
+    needs: display-environment
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout develop code        
+        uses: actions/checkout@v4
+        with:
+          # This pulls the branch name (e.g., 'develop') from the CI run
+          ref: ${{ github.event.workflow_run.head_branch }}
+      - name: Deploy code
+        uses: ./.github/workflows/tool-deploy-infrastructure.yml
+        #with:
+          #tag: ${{ github.event.workflow_run.head_sha }}
     
