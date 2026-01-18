@@ -14,9 +14,8 @@ concurrency:
 jobs:
   deploy:
       name: Deploy to Staging
-      needs: prepare-variables
       uses: ./.github/workflows/tool-deploy-infrastructure.yml
-      with:
+      #with:
         #tag: ${{ github.event.workflow_run.head_sha }}
 
   display-environment:
