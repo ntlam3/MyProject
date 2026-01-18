@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+      - name: Make script executable
+        run: chmod +x env-script.sh
       - name: Run script
-        run: env-script.sh
+        run: ./env-script.sh

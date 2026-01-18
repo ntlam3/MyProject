@@ -12,12 +12,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 jobs:
-  deploy:
-      name: Deploy to Staging
-      uses: ./.github/workflows/tool-deploy-infrastructure.yml
-      #with:
-        #tag: ${{ github.event.workflow_run.head_sha }}
-
+  
   display-environment:
     name: Display Environment
     runs-on: ubuntu-24.04
@@ -31,4 +26,10 @@ jobs:
           echo "====================="
           echo "Branch: $GITHUB_REF"
           echo "Branch: $REF"
+  deploy:
+      name: Deploy to Staging
+      needs: display-environment
+      uses: ./.github/workflows/tool-deploy-infrastructure.yml
+      #with:
+        #tag: ${{ github.event.workflow_run.head_sha }}
     
