@@ -1,1 +1,1 @@
-echo "Code file is on the develop branch"
+echo "Code file is on the main branch"
