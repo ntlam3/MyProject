@@ -29,15 +29,8 @@ jobs:
   deploy:
     name: Deploy to Staging
     needs: display-environment
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout develop code        
-        uses: actions/checkout@v4
-        with:
-          # This pulls the branch name (e.g., 'develop') from the CI run
-          ref: ${{ github.event.workflow_run.head_branch }}
-      - name: Deploy code
-        uses: ./.github/workflows/tool-deploy-infrastructure.yml
-        #with:
-          #tag: ${{ github.event.workflow_run.head_sha }}
+    #runs-on: ubuntu-24.04
+    uses: ./.github/workflows/tool-deploy-infrastructure.yml
+    with:
+      tag: ${{ github.event.workflow_run.head_sha }}
     
